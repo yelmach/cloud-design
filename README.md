@@ -3,12 +3,12 @@
 1. Network & Infrastructure Foundation
 Amazon VPC (Virtual Private Cloud)
 Security Groups (SGs)
-NAT Instance (EC2)
+NAT Instance (EC2) (fknat)
 
 2. Compute & Orchestration
 Amazon ECS (Elastic Container Service)
-Amazon EC2 (t3.micro)
-Github registry
+Amazon EC2 (t3.small)
+Docker Hub
 
 3. Databases & Messaging
 Amazon RDS (db.t3.micro / db.t4g.micro)
