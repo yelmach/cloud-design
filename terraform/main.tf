@@ -15,3 +15,8 @@ module "compute" {
   vpc_id             = module.networking.vpc_id
   vpc_cidr           = var.vpc_cidr
 }
+module "security_identity" {
+  source = "./module/security_identity"
+
+  project_name = var.project_name
+}
