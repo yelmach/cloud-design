@@ -74,8 +74,8 @@ resource "aws_autoscaling_group" "ecs" {
   name_prefix         = "${var.project_name}-ecs-asg-"
   vpc_zone_identifier = var.private_subnet_ids
   min_size            = 1
-  max_size            = 2
-  desired_capacity    = 1
+  max_size            = 3
+  desired_capacity    = 2
 
   launch_template {
     id      = aws_launch_template.ecs_host.id
