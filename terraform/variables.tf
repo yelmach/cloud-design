@@ -27,3 +27,8 @@ variable "azs" {
   description = "List of Availability Zones to use"
   type        = list(string)
 }
+
+variable "dockerhub_username" {
+  description = "docker hub username"
+  type        = string
+}
