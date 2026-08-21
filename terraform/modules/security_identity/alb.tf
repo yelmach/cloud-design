@@ -1,10 +1,3 @@
-# ==============================================================================
-# Application Load Balancer (ALB) & Routing Configuration
-# ==============================================================================
-
-# ------------------------------------------------------------------------------
-# 1. ALB Security Group
-# ------------------------------------------------------------------------------
 resource "aws_security_group" "alb_sg" {
   name        = "${var.project_name}-alb-sg"
   description = "Controls inbound traffic to Application Load Balancer"
@@ -33,9 +26,6 @@ resource "aws_security_group" "alb_sg" {
   }
 }
 
-# ------------------------------------------------------------------------------
-# 2. Application Load Balancer (Internal)
-# ------------------------------------------------------------------------------
 resource "aws_lb" "main_alb" {
   name               = "${var.project_name}-alb"
   internal           = true # Keeps ALB private; accessible via API Gateway VPC Link
@@ -48,12 +38,9 @@ resource "aws_lb" "main_alb" {
   }
 }
 
-# ------------------------------------------------------------------------------
-# 3. ALB Target Group (Contract for Teammate's ECS Tasks)
-# ------------------------------------------------------------------------------
 resource "aws_lb_target_group" "app_tg" {
   name        = "${var.project_name}-tg"
-  port        = 8080 # Port your backend application container listens on
+  port        = 3000
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
   target_type = "ip"

@@ -2,7 +2,8 @@ resource "aws_ecs_task_definition" "api_gateway_app" {
   family                   = "${var.project_name}-api-gateway-app"
   network_mode             = "awsvpc"
   requires_compatibilities = ["EC2"]
-  execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
+  execution_role_arn       = var.ecs_execution_role_arn
+  task_role_arn            = var.ecs_task_role_arn
 
   container_definitions = jsonencode([
     {
@@ -49,6 +50,11 @@ resource "aws_ecs_service" "api_gateway_app" {
     subnets         = var.private_subnet_ids
     security_groups = [aws_security_group.app_sg.id]
   }
+  load_balancer {
+    target_group_arn = var.alb_target_group_arn
+    container_name   = "api-gateway-app"
+    container_port   = 3000
+  }
 
   service_registries {
     registry_arn = aws_service_discovery_service.api_gateway_app.arn
@@ -57,4 +63,5 @@ resource "aws_ecs_service" "api_gateway_app" {
   tags = {
     Name = "${var.project_name}-api-gateway-app-service"
   }
+
 }
