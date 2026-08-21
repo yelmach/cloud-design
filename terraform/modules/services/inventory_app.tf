@@ -2,7 +2,8 @@ resource "aws_ecs_task_definition" "inventory_app" {
   family                   = "${var.project_name}-inventory-app"
   network_mode             = "awsvpc"
   requires_compatibilities = ["EC2"]
-  execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
+  execution_role_arn       = var.ecs_execution_role_arn
+  task_role_arn            = var.ecs_task_role_arn
 
   container_definitions = jsonencode([
     {
@@ -27,7 +28,13 @@ resource "aws_ecs_task_definition" "inventory_app" {
         { name = "INVENTORY_DB_PORT", value = "5432" },
         { name = "INVENTORY_DB_NAME", value = var.inventory_db_name },
         { name = "INVENTORY_DB_USER", value = var.inventory_db_user },
-        { name = "INVENTORY_DB_PASSWORD", value = var.inventory_db_password }
+      ]
+
+      secrets = [
+        {
+          name      = "INVENTORY_DB_PASSWORD"
+          valueFrom = var.inventory_db_password
+        }
       ]
     }
   ])

@@ -5,3 +5,6 @@ private_subnet_cidrs = ["10.0.20.0/24", "10.0.21.0/24"]
 azs                  = ["eu-west-2a", "eu-west-2b"]
 project_name         = "cloud-design"
 dockerhub_username   = "yelmach"
+billing_db_password = "put_your_password_here"
+inventory_db_password = "put_your_password_here"
+rabbitmq_password = "put_your_password_here"

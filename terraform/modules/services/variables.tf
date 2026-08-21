@@ -90,3 +90,28 @@ variable "rabbitmq_queue" {
   type        = string
   default     = "billing_queue"
 }
+
+variable "cognito_user_pool_id" {
+  description = "cognito_user_pool_id"
+  type        = string
+}
+variable "cognito_client_id" {
+  description = "cognito_client_id"
+  type        = string
+}
+variable "cognito_issuer_url" {
+  description = "cognito_issuer_url"
+  type        = string
+}
+variable "ecs_execution_role_arn" {
+  description = "ecs_execution_role_arn"
+  type        = string
+}
+variable "ecs_task_role_arn" {
+  description = "ecs_task_role_arn"
+  type        = string
+}
+variable "alb_target_group_arn" {
+  type = string
+  description = "alb_target_group_arn"
+}

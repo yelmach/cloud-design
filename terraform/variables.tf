@@ -32,3 +32,17 @@ variable "dockerhub_username" {
   description = "docker hub username"
   type        = string
 }
+variable "billing_db_password" {
+  description = "billing_db_password"
+  type = string
+}
+
+variable "inventory_db_password" {
+  description = "inventory_db_password"
+  type = string
+}
+
+variable "rabbitmq_password" {
+  description = "rabbitmq_password"
+  type = string
+}

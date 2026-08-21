@@ -2,7 +2,8 @@ resource "aws_ecs_task_definition" "inventory_db" {
   family                   = "${var.project_name}-inventory-db"
   network_mode             = "awsvpc"
   requires_compatibilities = ["EC2"]
-  execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
+  execution_role_arn =  var.ecs_execution_role_arn
+  task_role_arn = var.ecs_task_role_arn
 
   container_definitions = jsonencode([
     {
@@ -23,7 +24,12 @@ resource "aws_ecs_task_definition" "inventory_db" {
       environment = [
         { name = "POSTGRES_DB", value = var.inventory_db_name },
         { name = "POSTGRES_USER", value = var.inventory_db_user },
-        { name = "POSTGRES_PASSWORD", value = var.inventory_db_password }
+      ]
+      secrets = [
+        {
+          name = "POSTGRES_PASSWORD"
+          valueFrom = var.inventory_db_password 
+        }
       ]
     }
   ])
@@ -48,7 +54,6 @@ resource "aws_ecs_service" "inventory_db" {
   service_registries {
     registry_arn = aws_service_discovery_service.inventory_db.arn
   }
-
   tags = {
     Name = "${var.project_name}-inventory-db-service"
   }

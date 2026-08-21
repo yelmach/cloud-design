@@ -2,7 +2,8 @@ resource "aws_ecs_task_definition" "billing_db" {
   family                   = "${var.project_name}-billing-db"
   network_mode             = "awsvpc"
   requires_compatibilities = ["EC2"]
-  execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
+  execution_role_arn       = var.ecs_execution_role_arn
+  task_role_arn            = var.ecs_task_role_arn
 
   container_definitions = jsonencode([
     {
@@ -23,7 +24,12 @@ resource "aws_ecs_task_definition" "billing_db" {
       environment = [
         { name = "POSTGRES_DB", value = var.billing_db_name },
         { name = "POSTGRES_USER", value = var.billing_db_user },
-        { name = "POSTGRES_PASSWORD", value = var.billing_db_password }
+      ]
+      secrets = [
+        {
+          name = "POSTGRES_PASSWORD"
+          valueFrom = var.billing_db_password 
+        }
       ]
     }
   ])

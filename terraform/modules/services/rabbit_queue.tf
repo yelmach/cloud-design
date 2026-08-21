@@ -2,7 +2,8 @@ resource "aws_ecs_task_definition" "rabbit_queue" {
   family                   = "${var.project_name}-rabbit-queue"
   network_mode             = "awsvpc"
   requires_compatibilities = ["EC2"]
-  execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
+  execution_role_arn =  var.ecs_execution_role_arn
+  task_role_arn = var.ecs_task_role_arn
 
   container_definitions = jsonencode([
     {
@@ -27,7 +28,12 @@ resource "aws_ecs_task_definition" "rabbit_queue" {
 
       environment = [
         { name = "RABBITMQ_DEFAULT_USER", value = var.rabbitmq_user },
-        { name = "RABBITMQ_DEFAULT_PASS", value = var.rabbitmq_password }
+      ]
+      secrets = [
+        {
+          name = "RABBITMQ_DEFAULT_PASS"
+          valueFrom = var.rabbitmq_password 
+        }
       ]
     }
   ])
