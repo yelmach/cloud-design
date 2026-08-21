@@ -5,7 +5,7 @@ resource "aws_vpc" "main" {
   enable_dns_support   = true
 
   tags = {
-    Name = "cloud-design-vpc"
+    Name = "${var.project_name}-vpc"
   }
 }
 
@@ -13,7 +13,7 @@ resource "aws_vpc" "main" {
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
   tags = {
-    Name = "cloud-design-igw"
+    Name = "${var.project_name}-igw"
   }
 }
 
@@ -26,7 +26,7 @@ resource "aws_subnet" "public" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "cloud-design-public-${count.index + 1}"
+    Name = "${var.project_name}-public-${count.index + 1}"
   }
 }
 
@@ -38,7 +38,7 @@ resource "aws_subnet" "private" {
   availability_zone = var.azs[count.index]
 
   tags = {
-    Name = "cloud-design-private-${count.index + 1}"
+    Name = "${var.project_name}-private-${count.index + 1}"
   }
 }
 
@@ -51,7 +51,7 @@ resource "aws_route_table" "public" {
     gateway_id = aws_internet_gateway.igw.id
   }
   tags = {
-    Name = "cloud-design-public-rt"
+    Name = "${var.project_name}-public-rt"
   }
 }
 
@@ -104,7 +104,7 @@ resource "aws_instance" "nat" {
   source_dest_check      = false
 
   tags = {
-    Name = "cloud-design-nat-instance"
+    Name = "${var.project_name}-nat-instance"
   }
 }
 
@@ -117,7 +117,7 @@ resource "aws_route_table" "private" {
     network_interface_id = aws_instance.nat.primary_network_interface_id
   }
   tags = {
-    Name = "cloud-design-private-rt"
+    Name = "${var.project_name}-private-rt"
   }
 }
 
