@@ -50,7 +50,30 @@ resource "aws_iam_role_policy_attachment" "ecs_ssm_attach" {
 }
 
 
-resource "aws_iam_role" "ecs_task_role" {
-  name               = "${var.project_name}-ecs-task-role"
-  assume_role_policy = data.aws_iam_policy_document.ecs_tasks_trust.json
+
+
+
+resource "aws_iam_policy" "ecs_cognito_policy" {
+  name        = "${var.project_name}-ecs-cognito-policy"
+  description = "Allows ECS tasks to interact with Cognito User Pool"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "cognito-idp:AdminGetUser",
+          "cognito-idp:ListUsers",
+          "cognito-idp:GetUser"
+        ]
+        Resource = aws_cognito_user_pool.main_user_pool.arn
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_cognito_attach" {
+  role       = aws_iam_role.ecs_task_role.name
+  policy_arn = aws_iam_policy.ecs_cognito_policy.arn
 }
