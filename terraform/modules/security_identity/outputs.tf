@@ -22,3 +22,24 @@ output "ssm_rabbitmq_url_arn" {
   description = "SSM Parameter ARN for RabbitMQ URL"
   value       = aws_ssm_parameter.rabbitmq_url.arn
 }
+
+
+output "alb_arn" {
+  description = "ARN of the Application Load Balancer"
+  value       = aws_lb.main_alb.arn
+}
+
+output "alb_dns_name" {
+  description = "DNS address of the ALB for internal routing"
+  value       = aws_lb.main_alb.dns_name
+}
+
+output "alb_target_group_arn" {
+  description = "Target Group ARN for ECS tasks to attach to"
+  value       = aws_lb_target_group.app_tg.arn
+}
+
+output "alb_listener_arn" {
+  description = "ARN of the HTTP listener required by API Gateway VPC Link integration"
+  value       = aws_lb_listener.http_listener.arn
+}

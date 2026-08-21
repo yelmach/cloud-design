@@ -19,7 +19,10 @@ module "compute" {
 module "security_identity" {
   source = "./module/security_identity"
 
-  project_name = var.project_name
+  project_name       = var.project_name
+  vpc_id             = module.networking.vpc_id
+  vpc_cidr           = var.vpc_cidr
+  private_subnet_ids = module.networking.private_subnet_ids
 }
 
 module "services" {
