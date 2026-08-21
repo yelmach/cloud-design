@@ -1,5 +1,7 @@
-# terraform.tfvars.example
+region               = "eu-west-2"
 vpc_cidr             = "10.0.0.0/16"
-public_subnet_cidrs  = ["10.0.1.0/24", "10.0.2.0/24"]
-private_subnet_cidrs = ["10.0.3.0/24", "10.0.4.0/24"]
+public_subnet_cidrs  = ["10.0.10.0/24", "10.0.11.0/24"]
+private_subnet_cidrs = ["10.0.20.0/24", "10.0.21.0/24"]
 azs                  = ["eu-west-2a", "eu-west-2b"]
+project_name         = "cloud-design"
+dockerhub_username   = "yelmach"
