@@ -51,7 +51,14 @@ resource "aws_iam_role_policy_attachment" "ecs_ssm_attach" {
 
 
 
+resource "aws_iam_role" "ecs_task_role" {
+  name               = "${var.project_name}-ecs-task-role"
+  assume_role_policy = data.aws_iam_policy_document.ecs_tasks_trust.json
 
+  tags = {
+    Name = "${var.project_name}-ecs-task-role"
+  }
+}
 
 resource "aws_iam_policy" "ecs_cognito_policy" {
   name        = "${var.project_name}-ecs-cognito-policy"
