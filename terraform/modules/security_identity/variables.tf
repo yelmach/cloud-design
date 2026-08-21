@@ -17,3 +17,18 @@ variable "private_subnet_ids" {
   type        = list(string)
   description = "The privates subnet IDs passed from the network module"
 }
+
+variable "billing_db_password" {
+  description = "billing_db_password"
+  type = string
+}
+
+variable "inventory_db_password" {
+  description = "inventory_db_password"
+  type = string
+}
+
+variable "rabbitmq_password" {
+  description = "rabbitmq_password"
+  type = string
+}

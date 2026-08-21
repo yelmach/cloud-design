@@ -1,26 +1,46 @@
+# IAM Outputs
 output "ecs_execution_role_arn" {
-  description = "ARN of the IAM role for ECS task execution (Agent permissions)"
+  description = "ARN for ECS Task Execution Role"
   value       = aws_iam_role.ecs_execution_role.arn
 }
 
 output "ecs_task_role_arn" {
-  description = "ARN of the IAM role for the ECS container runtime"
+  description = "ARN for ECS Application Task Role"
   value       = aws_iam_role.ecs_task_role.arn
 }
 
-output "ssm_db_host_arn" {
-  description = "SSM Parameter ARN for DB Host"
-  value       = aws_ssm_parameter.db_host.arn
+# Cognito Outputs
+output "user_pool_id" {
+  description = "Cognito User Pool ID"
+  value       = aws_cognito_user_pool.main_user_pool.id
 }
 
-output "ssm_db_password_arn" {
-  description = "SSM Parameter ARN for DB Password"
-  value       = aws_ssm_parameter.db_password.arn
+output "user_pool_arn" {
+  description = "Cognito User Pool ARN"
+  value       = aws_cognito_user_pool.main_user_pool.arn
 }
 
-output "ssm_rabbitmq_url_arn" {
+output "user_pool_client_id" {
+  description = "Cognito App Client ID"
+  value       = aws_cognito_user_pool_client.app_client.id
+}
+
+output "cognito_issuer_url" {
+  description = "Issuer URL required for API Gateway JWT Authorizer"
+  value       = "https://${aws_cognito_user_pool.main_user_pool.endpoint}"
+}
+
+output "ssm_billing_db_password_arn" {
+  description = "SSM Parameter ARN for Billing DB Password"
+  value       = aws_ssm_parameter.billing_db_password.arn
+}
+output "ssm_inventory_db_password_arn" {
+  description = "SSM Parameter ARN for Inventory DB Password"
+  value       = aws_ssm_parameter.inventory_db_password.arn
+}
+output "ssm_rabbitmq_password_arn" {
   description = "SSM Parameter ARN for RabbitMQ URL"
-  value       = aws_ssm_parameter.rabbitmq_url.arn
+  value       = aws_ssm_parameter.rabbitmq_password.arn
 }
 
 
