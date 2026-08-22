@@ -45,7 +45,7 @@ module "services" {
   ecs_task_role_arn      = module.security_identity.ecs_task_role_arn
 
   alb_target_group_arn = module.security_identity.alb_target_group_arn
-
+  alb_listener_arn = module.security_identity.alb_listener_arn
   billing_db_password = module.security_identity.ssm_billing_db_password_arn
   inventory_db_password = module.security_identity.ssm_inventory_db_password_arn
   rabbitmq_password = module.security_identity.ssm_rabbitmq_password_arn

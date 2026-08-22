@@ -47,3 +47,8 @@ output "app_security_group_id" {
   description = "The ID of the application security group"
   value       = aws_security_group.app_sg.id
 }
+
+output "api_gateway_url" {
+  description = "Public invocation URL for the API Gateway"
+  value       = aws_apigatewayv2_stage.default.invoke_url
+}

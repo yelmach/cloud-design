@@ -115,3 +115,8 @@ variable "alb_target_group_arn" {
   type = string
   description = "alb_target_group_arn"
 }
+
+variable "alb_listener_arn" {
+  type = string
+  description = "alb_target_group_arn"
+}
