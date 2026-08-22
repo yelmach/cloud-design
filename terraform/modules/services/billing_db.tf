@@ -13,6 +13,15 @@ resource "aws_ecs_task_definition" "billing_db" {
       cpu       = 256
       memory    = 300
 
+       logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          "awslogs-group"         = aws_cloudwatch_log_group.ecs_logs.name
+          "awslogs-region"        = "eu-west-2"
+          "awslogs-stream-prefix" = "billing-db"
+        }
+      }
+
       portMappings = [
         {
           containerPort = 5432

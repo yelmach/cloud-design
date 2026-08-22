@@ -12,7 +12,14 @@ resource "aws_ecs_task_definition" "api_gateway_app" {
       essential = true
       cpu       = 256
       memory    = 300
-
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          "awslogs-group"         = aws_cloudwatch_log_group.ecs_logs.name
+          "awslogs-region"        = "eu-west-2"
+          "awslogs-stream-prefix" = "api-gateway"
+        }
+      }
       portMappings = [
         {
           containerPort = 3000
@@ -28,8 +35,13 @@ resource "aws_ecs_task_definition" "api_gateway_app" {
         { name = "RABBITMQ_HOST", value = "rabbit-queue-service.${var.dns_namespace_name}" },
         { name = "RABBITMQ_PORT", value = "5672" },
         { name = "RABBITMQ_DEFAULT_USER", value = var.rabbitmq_user },
-        { name = "RABBITMQ_DEFAULT_PASS", value = var.rabbitmq_password },
         { name = "RABBITMQ_QUEUE", value = var.rabbitmq_queue }
+      ]
+      secrets = [
+        {
+          name      = "RABBITMQ_DEFAULT_PASS"
+          valueFrom = var.rabbitmq_password
+        }
       ]
     }
   ])
