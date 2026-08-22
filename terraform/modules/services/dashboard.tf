@@ -11,7 +11,7 @@ resource "aws_cloudwatch_dashboard" "platform_insights" {
         width  = 24
         height = 2
         properties = {
-          markdown = "## 🚀 Microservices Platform Performance & Health Dashboard\nReal-time operational insights into API Gateway, load balancing health, ECS container utilization, and runtime log streams."
+          markdown = "## Microservices Platform Performance & Health Dashboard\nReal-time operational insights into API Gateway, load balancing health, ECS container utilization, and runtime log streams."
         }
       },
 
@@ -24,7 +24,7 @@ resource "aws_cloudwatch_dashboard" "platform_insights" {
         height = 6
         properties = {
           metrics = [
-            [ "AWS/ApiGateway", "Count", "ApiId", aws_apigatewayv2_api.main.id, { "stat" = "Sum", "label" = "Total Requests" } ],
+            [ "AWS/ApiGateway", "Count", "ApiId", aws_apigatewayv2_api.api_gw.id, { "stat" = "Sum", "label" = "Total Requests" } ],
             [ ".", "4XXError", ".", ".", { "stat" = "Sum", "color" = "#ff7f0e", "label" = "4xx Client Errors" } ],
             [ ".", "5XXError", ".", ".", { "stat" = "Sum", "color" = "#d62728", "label" = "5xx Server Errors" } ]
           ]
@@ -44,7 +44,7 @@ resource "aws_cloudwatch_dashboard" "platform_insights" {
         height = 6
         properties = {
           metrics = [
-            [ "AWS/ApiGateway", "Latency", "ApiId", aws_apigatewayv2_api.main.id , { "stat" = "p50", "label" = "p50 Latency (ms)" } ],
+            [ "AWS/ApiGateway", "Latency", "ApiId", aws_apigatewayv2_api.api_gw.id , { "stat" = "p50", "label" = "p50 Latency (ms)" } ],
             [ "...", { "stat" = "p95", "label" = "p95 Latency (ms)", "color" = "#ff7f0e" } ],
             [ "...", { "stat" = "p99", "label" = "p99 Latency (ms)", "color" = "#d62728" } ]
           ]

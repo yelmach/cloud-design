@@ -59,12 +59,12 @@ output "alb_target_group_arn" {
   value       = aws_lb_target_group.app_tg.arn
 }
 output "alb_arn_suffix" {
-  value       = aws_lb.main.arn_suffix
+  value       = aws_lb.main_alb.arn_suffix
   description = "ARN Suffix of ALB for CloudWatch Metrics"
 }
 
 output "target_group_arn_suffix" {
-  value       = aws_lb_target_group.main.arn_suffix
+  value       = aws_lb_target_group.app_tg.arn_suffix
   description = "ARN Suffix of Target Group for CloudWatch Metrics"
 }
 output "alb_listener_arn" {
