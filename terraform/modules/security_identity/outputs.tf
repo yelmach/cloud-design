@@ -58,7 +58,15 @@ output "alb_target_group_arn" {
   description = "Target Group ARN for ECS tasks to attach to"
   value       = aws_lb_target_group.app_tg.arn
 }
+output "alb_arn_suffix" {
+  value       = aws_lb.main.arn_suffix
+  description = "ARN Suffix of ALB for CloudWatch Metrics"
+}
 
+output "target_group_arn_suffix" {
+  value       = aws_lb_target_group.main.arn_suffix
+  description = "ARN Suffix of Target Group for CloudWatch Metrics"
+}
 output "alb_listener_arn" {
   description = "ARN of the HTTP listener required by API Gateway VPC Link integration"
   value       = aws_lb_listener.http_listener.arn

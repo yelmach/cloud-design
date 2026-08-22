@@ -32,6 +32,7 @@ module "services" {
   source = "./modules/services"
 
   project_name       = var.project_name
+  aws_region         = var.region
   vpc_id             = module.networking.vpc_id
   vpc_cidr           = var.vpc_cidr
   private_subnet_ids = module.networking.private_subnet_ids
@@ -44,9 +45,12 @@ module "services" {
   ecs_execution_role_arn = module.security_identity.ecs_execution_role_arn
   ecs_task_role_arn      = module.security_identity.ecs_task_role_arn
 
-  alb_target_group_arn = module.security_identity.alb_target_group_arn
-  alb_listener_arn = module.security_identity.alb_listener_arn
-  billing_db_password = module.security_identity.ssm_billing_db_password_arn
+  alb_target_group_arn  = module.security_identity.alb_target_group_arn
+  alb_listener_arn      = module.security_identity.alb_listener_arn
+  alb_arn_suffix =  module.security_identity.alb_arn_suffix
+  alb_target_group_arn_suffix = module.security_identity.alb_target_group_arn
+
+  billing_db_password   = module.security_identity.ssm_billing_db_password_arn
   inventory_db_password = module.security_identity.ssm_inventory_db_password_arn
-  rabbitmq_password = module.security_identity.ssm_rabbitmq_password_arn
+  rabbitmq_password     = module.security_identity.ssm_rabbitmq_password_arn
 }

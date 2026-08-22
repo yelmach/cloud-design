@@ -2,7 +2,10 @@ variable "project_name" {
   description = "The project name"
   type        = string
 }
-
+variable "aws_region" {
+  description = "aws region"
+  type = string
+}
 variable "vpc_id" {
   description = "The ID of the VPC"
   type        = string
@@ -119,4 +122,13 @@ variable "alb_target_group_arn" {
 variable "alb_listener_arn" {
   type = string
   description = "alb_target_group_arn"
+}
+
+variable "alb_target_group_arn_suffix" {
+  type = string
+  description = "alb_target_group_arn_suffix"
+}
+variable "alb_arn_suffix" {
+   type = string
+  description = "alb_arn_suffix"
 }
