@@ -14,6 +14,10 @@ def create_app():
 
     app.register_blueprint(movies_blueprint)
 
+    @app.get("/health")
+    def healthcheck():
+        return jsonify(status="ok"), 200
+
     @app.errorhandler(400)
     def handle_bad_request(error):
         return jsonify(error=error.description or "Bad request"), 400

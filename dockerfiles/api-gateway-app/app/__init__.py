@@ -23,6 +23,10 @@ def create_app():
     
     app.register_blueprint(inventory_blueprint)
     app.register_blueprint(billing_blueprint)
+
+    @app.get("/health")
+    def healthcheck():
+        return jsonify(status="ok"), 200
     
     @app.errorhandler(400)
     def handle_bad_request(error):
