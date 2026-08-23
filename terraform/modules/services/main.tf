@@ -160,3 +160,13 @@ resource "aws_security_group" "app_sg" {
     Name = "${var.project_name}-app-sg"
   }
 }
+
+
+resource "aws_cloudwatch_log_group" "ecs_logs" {
+  name              = "/ecs/${var.project_name}"
+  retention_in_days = 7 # Automatically deletes old logs after 7 days
+
+  tags = {
+    Name      = "${var.project_name}-ecs-logs"
+  }
+}

@@ -24,6 +24,12 @@ resource "aws_iam_instance_profile" "ecs_instance_profile" {
   role = aws_iam_role.ecs_instance_role.name
 }
 
+# Attach SSM Managed Instance Core policy to the EC2 Host Role
+resource "aws_iam_role_policy_attachment" "ecs_ec2_ssm_attach" {
+  role       = aws_iam_role.ecs_instance_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
+
 resource "aws_security_group" "ecs_sg" {
   name        = "${var.project_name}-ecs-sg"
   description = "Security Group for ECS Private Compute Host"

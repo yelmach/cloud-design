@@ -48,7 +48,7 @@ output "app_security_group_id" {
   value       = aws_security_group.app_sg.id
 }
 
-output "ecs_task_execution_role_arn" {
-  description = "The ARN of the ECS task execution role"
-  value       = aws_iam_role.ecs_task_execution_role.arn
+output "api_gateway_url" {
+  description = "Public invocation URL for the API Gateway"
+  value       = aws_apigatewayv2_stage.default.invoke_url
 }

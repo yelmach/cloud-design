@@ -2,7 +2,7 @@ resource "aws_ecs_task_definition" "rabbit_queue" {
   family                   = "${var.project_name}-rabbit-queue"
   network_mode             = "awsvpc"
   requires_compatibilities = ["EC2"]
-  execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
+  execution_role_arn       = var.ecs_execution_role_arn
 
   container_definitions = jsonencode([
     {
@@ -11,6 +11,15 @@ resource "aws_ecs_task_definition" "rabbit_queue" {
       essential = true
       cpu       = 256
       memory    = 300
+
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          "awslogs-group"         = aws_cloudwatch_log_group.ecs_logs.name
+          "awslogs-region"        = "eu-west-2"
+          "awslogs-stream-prefix" = "rabbit-queue"
+        }
+      }
 
       portMappings = [
         {
@@ -24,10 +33,15 @@ resource "aws_ecs_task_definition" "rabbit_queue" {
           protocol      = "tcp"
         }
       ]
-
+      
       environment = [
         { name = "RABBITMQ_DEFAULT_USER", value = var.rabbitmq_user },
-        { name = "RABBITMQ_DEFAULT_PASS", value = var.rabbitmq_password }
+      ]
+      secrets = [
+        {
+          name      = "RABBITMQ_DEFAULT_PASS"
+          valueFrom = var.rabbitmq_password
+        }
       ]
     }
   ])

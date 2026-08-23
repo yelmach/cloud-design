@@ -1,0 +1,292 @@
+{
+	"info": {
+		"_postman_id": "6c0a8b0e-0909-430a-a567-b7f4f8d77b20",
+		"name": "CRUD-master",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26879654",
+		"_collection_link": "https://speeding-spaceship-919227.postman.co/workspace/hamza~d1584fa5-bf61-4697-823d-6e8115915e58/collection/26879654-6c0a8b0e-0909-430a-a567-b7f4f8d77b20?action=share&source=collection_link&creator=26879654"
+	},
+	"item": [
+		{
+			"name": "inventory",
+			"item": [
+				{
+					"name": "Get Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJraWQiOiJMV2JiUndoZ2hwcGh0dFU1d1JERXY1aDY3R2lTZWNnV3l2UVYrajY0WnhVPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIzNjgyNjJlNC1iMGMxLTcwY2QtYzU2MC01Yjg3Yzg3MjdlNzUiLCJpc3MiOiJodHRwczovL2NvZ25pdG8taWRwLmV1LXdlc3QtMi5hbWF6b25hd3MuY29tL2V1LXdlc3QtMl9GVjNHVWgyRTciLCJjbGllbnRfaWQiOiIxbmwyY3E3bXIyazA2aG9uam91aTk0MG5iMCIsIm9yaWdpbl9qdGkiOiJiMjE2YzVmYS02ODEyLTQ5ODctODk0Yi0xMDE3YjczZDJiYTgiLCJldmVudF9pZCI6IjVkNWZmOTg4LThmNDAtNDY0YS04ZDA3LWE1NDJlYjJiMTI3MiIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE3ODczOTY2MzYsImV4cCI6MTc4NzQwMDIzNiwiaWF0IjoxNzg3Mzk2NjM2LCJqdGkiOiJkZGNjM2JiYS0wNjc3LTQ2NDMtOGJlNy1hMjg4ZGQ4NjQ3NjkiLCJ1c2VybmFtZSI6IjM2ODI2MmU0LWIwYzEtNzBjZC1jNTYwLTViODdjODcyN2U3NSJ9.IYC0Sdw3nJiOzHynKdXXNBCnPGPE7iuOUF5_ThWb8H4M5b37mr7pR0OSRhP-QHDrRbJExv_-jGHJLhDbxW36KKCp2luXGEEhYNIepc4LRtrGGO0E4ub-WjUMaukQAKwzsMGtSV-QWZpFiN8udtNPniJnKSTSaO0eRiHGV20mPSWK5fT0AR5i_rr5wPATz6brKFGR2eBw1tFySDIgQErKn_mjQuyrRu1AdcOKvaPz2rzi1R72m7wtdAr4V3KQBOBRywTYJKMjJIT5sJbvyV5_mXkGCHdbinchhlyYERxKy--KGOOhEVTWjLhQV0hgI6jTk9Ve8V0jPy8laGsViQnCqA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{URL}}/api/movies",
+							"protocol": "https",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Request with params",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{URL}}/api/movies?title=01",
+							"protocol": "https",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"movies"
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": "01"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get one movie",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{URL}}/api/movies/2",
+							"protocol": "https",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"movies",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Request 1",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJraWQiOiJMV2JiUndoZ2hwcGh0dFU1d1JERXY1aDY3R2lTZWNnV3l2UVYrajY0WnhVPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIzNjgyNjJlNC1iMGMxLTcwY2QtYzU2MC01Yjg3Yzg3MjdlNzUiLCJpc3MiOiJodHRwczovL2NvZ25pdG8taWRwLmV1LXdlc3QtMi5hbWF6b25hd3MuY29tL2V1LXdlc3QtMl9GVjNHVWgyRTciLCJjbGllbnRfaWQiOiIxbmwyY3E3bXIyazA2aG9uam91aTk0MG5iMCIsIm9yaWdpbl9qdGkiOiJiMjE2YzVmYS02ODEyLTQ5ODctODk0Yi0xMDE3YjczZDJiYTgiLCJldmVudF9pZCI6IjVkNWZmOTg4LThmNDAtNDY0YS04ZDA3LWE1NDJlYjJiMTI3MiIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE3ODczOTY2MzYsImV4cCI6MTc4NzQwMDIzNiwiaWF0IjoxNzg3Mzk2NjM2LCJqdGkiOiJkZGNjM2JiYS0wNjc3LTQ2NDMtOGJlNy1hMjg4ZGQ4NjQ3NjkiLCJ1c2VybmFtZSI6IjM2ODI2MmU0LWIwYzEtNzBjZC1jNTYwLTViODdjODcyN2U3NSJ9.IYC0Sdw3nJiOzHynKdXXNBCnPGPE7iuOUF5_ThWb8H4M5b37mr7pR0OSRhP-QHDrRbJExv_-jGHJLhDbxW36KKCp2luXGEEhYNIepc4LRtrGGO0E4ub-WjUMaukQAKwzsMGtSV-QWZpFiN8udtNPniJnKSTSaO0eRiHGV20mPSWK5fT0AR5i_rr5wPATz6brKFGR2eBw1tFySDIgQErKn_mjQuyrRu1AdcOKvaPz2rzi1R72m7wtdAr4V3KQBOBRywTYJKMjJIT5sJbvyV5_mXkGCHdbinchhlyYERxKy--KGOOhEVTWjLhQV0hgI6jTk9Ve8V0jPy8laGsViQnCqA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"A new movie\",\n  \"description\": \"Very short description\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{URL}}/api/movies",
+							"protocol": "https",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Request 2",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJraWQiOiJNRHNQNXBaTk5rRmVqWmtnVi9vQW5qci8zNlBaQ1I1c29Tc1htcDJvUzlNPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIyNmUyNDI1NC01MGIxLTcwNzQtMzU0Yi02YzcxZDZhMGE1NDAiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImlzcyI6Imh0dHBzOi8vY29nbml0by1pZHAuZXUtd2VzdC0yLmFtYXpvbmF3cy5jb20vZXUtd2VzdC0yX1ZQU05LYnZ5dCIsImNvZ25pdG86dXNlcm5hbWUiOiIyNmUyNDI1NC01MGIxLTcwNzQtMzU0Yi02YzcxZDZhMGE1NDAiLCJvcmlnaW5fanRpIjoiNjMyOWRmYzYtMjQ5OS00YjExLWIwNmYtMWY4YzgxMmJmYTJiIiwiYXVkIjoiNWdtNjVrc2lxOHZnNmxmZjZtMXJtOWtyamMiLCJldmVudF9pZCI6ImQ5MDkzOWRmLTQ2MDEtNGQ4Zi1iMWQwLTk5OGI2Mjk3MjVlNCIsInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNzg3MzkzMzA4LCJleHAiOjE3ODczOTY5MDgsImlhdCI6MTc4NzM5MzMwOCwianRpIjoiNjQwM2Q1N2YtYTAwYi00MzUyLWE4NzMtZDJkMDA4NGEyMmY2IiwiZW1haWwiOiJ0ZXN0QGNsb3VkLmRlc2lnbiJ9.iSNPkMYU1V0miW7KWf6kNtTFHBFVHIF-KpsjaMCyRQOCx31Xjad5EkB2LxEaVWVw5NpJS4NaXwdhlNLfoTBmCw-IcF7Yppc_KgZxlg7pLJrgt8QsDUXWVC4j1mOzdZ3asx0cyO_V69KLy4Ccp5aZewYKl1Wu3Y7hgfQh0_X0IqFevcPP2qU0AfiZYh_Ol9LO3E48DJR-5y22JB_Uq0RBGW7qQSQk2WJFls_X6crp7JgzxvPlkKTsxcD0oh96dgV0mhyZvZqEiS3ClHxqPanREMCoht2ahwGcZSDyVYujpmd-a5qqXx9rb0qKNl9mOUdDkrW561nv_c3CcOPy3r1hgw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"01movie\",\n  \"description\": \"Very very long description hhhhhhhhhhhhhhhhh\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{URL}}/api/movies",
+							"protocol": "https",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Request",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"01movie edited\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{URL}}/api/movies/2",
+							"protocol": "https",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"movies",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete one movie",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{URL}}/api/movies/2",
+							"protocol": "https",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"movies",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete all",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{URL}}/api/movies",
+							"protocol": "https",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"movies"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "billing api",
+			"item": [
+				{
+					"name": "Post Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJraWQiOiJNRHNQNXBaTk5rRmVqWmtnVi9vQW5qci8zNlBaQ1I1c29Tc1htcDJvUzlNPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIyNmUyNDI1NC01MGIxLTcwNzQtMzU0Yi02YzcxZDZhMGE1NDAiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImlzcyI6Imh0dHBzOi8vY29nbml0by1pZHAuZXUtd2VzdC0yLmFtYXpvbmF3cy5jb20vZXUtd2VzdC0yX1ZQU05LYnZ5dCIsImNvZ25pdG86dXNlcm5hbWUiOiIyNmUyNDI1NC01MGIxLTcwNzQtMzU0Yi02YzcxZDZhMGE1NDAiLCJvcmlnaW5fanRpIjoiNjMyOWRmYzYtMjQ5OS00YjExLWIwNmYtMWY4YzgxMmJmYTJiIiwiYXVkIjoiNWdtNjVrc2lxOHZnNmxmZjZtMXJtOWtyamMiLCJldmVudF9pZCI6ImQ5MDkzOWRmLTQ2MDEtNGQ4Zi1iMWQwLTk5OGI2Mjk3MjVlNCIsInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNzg3MzkzMzA4LCJleHAiOjE3ODczOTY5MDgsImlhdCI6MTc4NzM5MzMwOCwianRpIjoiNjQwM2Q1N2YtYTAwYi00MzUyLWE4NzMtZDJkMDA4NGEyMmY2IiwiZW1haWwiOiJ0ZXN0QGNsb3VkLmRlc2lnbiJ9.iSNPkMYU1V0miW7KWf6kNtTFHBFVHIF-KpsjaMCyRQOCx31Xjad5EkB2LxEaVWVw5NpJS4NaXwdhlNLfoTBmCw-IcF7Yppc_KgZxlg7pLJrgt8QsDUXWVC4j1mOzdZ3asx0cyO_V69KLy4Ccp5aZewYKl1Wu3Y7hgfQh0_X0IqFevcPP2qU0AfiZYh_Ol9LO3E48DJR-5y22JB_Uq0RBGW7qQSQk2WJFls_X6crp7JgzxvPlkKTsxcD0oh96dgV0mhyZvZqEiS3ClHxqPanREMCoht2ahwGcZSDyVYujpmd-a5qqXx9rb0qKNl9mOUdDkrW561nv_c3CcOPy3r1hgw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"user_id\": \"20\",\n  \"number_of_items\": \"99\",\n  \"total_amount\": \"250\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{URL}}/api/billing",
+							"protocol": "https",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"billing"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

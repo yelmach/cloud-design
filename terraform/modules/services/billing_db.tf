@@ -2,7 +2,7 @@ resource "aws_ecs_task_definition" "billing_db" {
   family                   = "${var.project_name}-billing-db"
   network_mode             = "awsvpc"
   requires_compatibilities = ["EC2"]
-  execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
+  execution_role_arn       = var.ecs_execution_role_arn
 
   container_definitions = jsonencode([
     {
@@ -11,6 +11,15 @@ resource "aws_ecs_task_definition" "billing_db" {
       essential = true
       cpu       = 256
       memory    = 300
+
+       logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          "awslogs-group"         = aws_cloudwatch_log_group.ecs_logs.name
+          "awslogs-region"        = "eu-west-2"
+          "awslogs-stream-prefix" = "billing-db"
+        }
+      }
 
       portMappings = [
         {
@@ -23,7 +32,12 @@ resource "aws_ecs_task_definition" "billing_db" {
       environment = [
         { name = "POSTGRES_DB", value = var.billing_db_name },
         { name = "POSTGRES_USER", value = var.billing_db_user },
-        { name = "POSTGRES_PASSWORD", value = var.billing_db_password }
+      ]
+      secrets = [
+        {
+          name = "POSTGRES_PASSWORD"
+          valueFrom = var.billing_db_password 
+        }
       ]
     }
   ])
