@@ -110,10 +110,7 @@ variable "ecs_execution_role_arn" {
   description = "ecs_execution_role_arn"
   type        = string
 }
-variable "ecs_task_role_arn" {
-  description = "ecs_task_role_arn"
-  type        = string
-}
+
 variable "alb_target_group_arn" {
   type = string
   description = "alb_target_group_arn"

@@ -9,7 +9,7 @@ resource "aws_ssm_parameter" "billing_db_password" {
   }
 
   tags = {
-    Name        = "${var.project_name}-billing-db-password"
+    Name = "${var.project_name}-billing-db-password"
   }
 }
 
@@ -24,7 +24,7 @@ resource "aws_ssm_parameter" "inventory_db_password" {
   }
 
   tags = {
-    Name        = "${var.project_name}-inventory-db-password"
+    Name = "${var.project_name}-inventory-db-password"
   }
 }
 
@@ -39,6 +39,6 @@ resource "aws_ssm_parameter" "rabbitmq_password" {
   }
 
   tags = {
-    Name        = "${var.project_name}-rabbitmq-password"
+    Name = "${var.project_name}-rabbitmq-password"
   }
 }

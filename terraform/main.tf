@@ -43,7 +43,6 @@ module "services" {
   cognito_client_id      = module.security_identity.user_pool_client_id
   cognito_issuer_url     = module.security_identity.cognito_issuer_url
   ecs_execution_role_arn = module.security_identity.ecs_execution_role_arn
-  ecs_task_role_arn      = module.security_identity.ecs_task_role_arn
 
   alb_target_group_arn  = module.security_identity.alb_target_group_arn
   alb_listener_arn      = module.security_identity.alb_listener_arn

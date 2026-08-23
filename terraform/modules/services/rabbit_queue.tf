@@ -3,7 +3,6 @@ resource "aws_ecs_task_definition" "rabbit_queue" {
   network_mode             = "awsvpc"
   requires_compatibilities = ["EC2"]
   execution_role_arn       = var.ecs_execution_role_arn
-  task_role_arn            = var.ecs_task_role_arn
 
   container_definitions = jsonencode([
     {

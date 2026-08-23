@@ -3,7 +3,6 @@ resource "aws_cognito_user_pool" "main_user_pool" {
 
   # Sign-in Method: Users log in using their Email address
   username_attributes      = ["email"]
-  auto_verified_attributes = ["email"]
 
   # Password Policy (Production Security Baseline)
   password_policy {

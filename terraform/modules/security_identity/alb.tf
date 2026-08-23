@@ -63,9 +63,6 @@ resource "aws_lb_target_group" "app_tg" {
   }
 }
 
-# ------------------------------------------------------------------------------
-# 4. ALB Listener (Forwards Port 80 to Target Group)
-# ------------------------------------------------------------------------------
 resource "aws_lb_listener" "http_listener" {
   load_balancer_arn = aws_lb.main_alb.arn
   port              = 80

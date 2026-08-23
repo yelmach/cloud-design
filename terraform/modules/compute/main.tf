@@ -26,7 +26,7 @@ resource "aws_iam_instance_profile" "ecs_instance_profile" {
 
 # Attach SSM Managed Instance Core policy to the EC2 Host Role
 resource "aws_iam_role_policy_attachment" "ecs_ec2_ssm_attach" {
-  role       = aws_iam_role.ecs_instance_role.name # Replace with your EC2 host IAM role resource name
+  role       = aws_iam_role.ecs_instance_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 

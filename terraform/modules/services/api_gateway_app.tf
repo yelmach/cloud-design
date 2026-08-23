@@ -3,7 +3,7 @@ resource "aws_ecs_task_definition" "api_gateway_app" {
   network_mode             = "awsvpc"
   requires_compatibilities = ["EC2"]
   execution_role_arn       = var.ecs_execution_role_arn
-  task_role_arn            = var.ecs_task_role_arn
+
 
   container_definitions = jsonencode([
     {
