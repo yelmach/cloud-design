@@ -71,6 +71,10 @@ resource "aws_ecs_service" "billing_app" {
     security_groups = [aws_security_group.app_sg.id]
   }
 
+  service_registries {
+    registry_arn = aws_service_discovery_service.billing_app.arn
+  }
+
   tags = {
     Name = "${var.project_name}-billing-app-service"
   }

@@ -103,6 +103,25 @@ resource "aws_service_discovery_service" "api_gateway_app" {
   }
 }
 
+resource "aws_service_discovery_service" "billing_app" {
+  name = "billing-app-service"
+
+  dns_config {
+    namespace_id = aws_service_discovery_private_dns_namespace.main.id
+
+    dns_records {
+      ttl  = 10
+      type = "A"
+    }
+
+    routing_policy = "MULTIVALUE"
+  }
+
+  tags = {
+    Name = "${var.project_name}-discovery-billing-app"
+  }
+}
+
 resource "aws_security_group" "db_sg" {
   name        = "${var.project_name}-db-sg"
   description = "Security Group for PostgreSQL database containers"
