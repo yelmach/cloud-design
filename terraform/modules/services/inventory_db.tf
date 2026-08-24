@@ -4,6 +4,15 @@ resource "aws_ecs_task_definition" "inventory_db" {
   requires_compatibilities = ["EC2"]
   execution_role_arn =  var.ecs_execution_role_arn
 
+  volume {
+    name = "inventory-db-data"
+
+    docker_volume_configuration {
+      scope         = "shared"
+      autoprovision = true
+      driver        = "local"
+    }
+  }
 
   container_definitions = jsonencode([
     {
@@ -33,6 +42,15 @@ resource "aws_ecs_task_definition" "inventory_db" {
       environment = [
         { name = "POSTGRES_DB", value = var.inventory_db_name },
         { name = "POSTGRES_USER", value = var.inventory_db_user },
+        { name = "PGDATA", value = "/var/lib/postgresql/data/pgdata" }
+      ]
+
+      mountPoints = [
+        {
+          sourceVolume  = "inventory-db-data"
+          containerPath = "/var/lib/postgresql/data"
+          readOnly      = false
+        }
       ]
       secrets = [
         {

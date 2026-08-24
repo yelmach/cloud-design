@@ -4,6 +4,16 @@ resource "aws_ecs_task_definition" "billing_db" {
   requires_compatibilities = ["EC2"]
   execution_role_arn       = var.ecs_execution_role_arn
 
+  volume {
+    name = "billing-db-data"
+
+    docker_volume_configuration {
+      scope         = "shared"
+      autoprovision = true
+      driver        = "local"
+    }
+  }
+
   container_definitions = jsonencode([
     {
       name      = "billing-db"
@@ -32,6 +42,15 @@ resource "aws_ecs_task_definition" "billing_db" {
       environment = [
         { name = "POSTGRES_DB", value = var.billing_db_name },
         { name = "POSTGRES_USER", value = var.billing_db_user },
+        { name = "PGDATA", value = "/var/lib/postgresql/data/pgdata" }
+      ]
+
+      mountPoints = [
+        {
+          sourceVolume  = "billing-db-data"
+          containerPath = "/var/lib/postgresql/data"
+          readOnly      = false
+        }
       ]
       secrets = [
         {
