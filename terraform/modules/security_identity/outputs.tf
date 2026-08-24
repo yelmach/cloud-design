@@ -4,8 +4,6 @@ output "ecs_execution_role_arn" {
   value       = aws_iam_role.ecs_execution_role.arn
 }
 
-
-
 # Cognito Outputs
 output "user_pool_id" {
   description = "Cognito User Pool ID"
@@ -27,6 +25,11 @@ output "cognito_issuer_url" {
   value       = "https://${aws_cognito_user_pool.main_user_pool.endpoint}"
 }
 
+output "alb_security_group_id" {
+  description = "ID of the ALB security group"
+  value       = aws_security_group.alb_sg.id
+}
+
 output "ssm_billing_db_password_arn" {
   description = "SSM Parameter ARN for Billing DB Password"
   value       = aws_ssm_parameter.billing_db_password.arn
@@ -39,7 +42,6 @@ output "ssm_rabbitmq_password_arn" {
   description = "SSM Parameter ARN for RabbitMQ URL"
   value       = aws_ssm_parameter.rabbitmq_password.arn
 }
-
 
 output "alb_arn" {
   description = "ARN of the Application Load Balancer"

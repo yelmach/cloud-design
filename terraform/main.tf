@@ -16,6 +16,7 @@ module "compute" {
   vpc_id             = module.networking.vpc_id
   vpc_cidr           = var.vpc_cidr
 }
+
 module "security_identity" {
   source = "./modules/security_identity"
 
@@ -44,12 +45,15 @@ module "services" {
   cognito_issuer_url     = module.security_identity.cognito_issuer_url
   ecs_execution_role_arn = module.security_identity.ecs_execution_role_arn
 
-  alb_target_group_arn  = module.security_identity.alb_target_group_arn
-  alb_listener_arn      = module.security_identity.alb_listener_arn
-  alb_arn_suffix =  module.security_identity.alb_arn_suffix
-  alb_target_group_arn_suffix = module.security_identity.alb_target_group_arn
+  alb_target_group_arn        = module.security_identity.alb_target_group_arn
+  alb_listener_arn            = module.security_identity.alb_listener_arn
+  alb_arn_suffix              = module.security_identity.alb_arn_suffix
+  alb_target_group_arn_suffix = module.security_identity.target_group_arn_suffix
+  alb_security_group_id       = module.security_identity.alb_security_group_id
+  ecs_cluster_name            = module.compute.ecs_cluster_name
 
   billing_db_password   = module.security_identity.ssm_billing_db_password_arn
   inventory_db_password = module.security_identity.ssm_inventory_db_password_arn
   rabbitmq_password     = module.security_identity.ssm_rabbitmq_password_arn
 }
+

@@ -3,7 +3,6 @@ resource "aws_security_group" "alb_sg" {
   description = "Controls inbound traffic to Application Load Balancer"
   vpc_id      = var.vpc_id
 
-  # Allow HTTP traffic into ALB from VPC Link / API Gateway
   ingress {
     description = "Allow HTTP from VPC"
     from_port   = 80
@@ -12,7 +11,6 @@ resource "aws_security_group" "alb_sg" {
     cidr_blocks = [var.vpc_cidr]
   }
 
-  # Allow outbound traffic to backend containers/EC2
   egress {
     description = "Allow all outbound"
     from_port   = 0
@@ -22,7 +20,7 @@ resource "aws_security_group" "alb_sg" {
   }
 
   tags = {
-    Name      = "${var.project_name}-alb-sg"
+    Name = "${var.project_name}-alb-sg"
   }
 }
 
@@ -34,7 +32,7 @@ resource "aws_lb" "main_alb" {
   subnets            = var.private_subnet_ids
 
   tags = {
-    Name      = "${var.project_name}-alb"
+    Name = "${var.project_name}-alb"
   }
 }
 
@@ -45,7 +43,6 @@ resource "aws_lb_target_group" "app_tg" {
   vpc_id      = var.vpc_id
   target_type = "ip"
 
-  # Health Check configuration to monitor container status
   health_check {
     enabled             = true
     path                = "/health" # Health check endpoint exposed by app
@@ -59,7 +56,7 @@ resource "aws_lb_target_group" "app_tg" {
   }
 
   tags = {
-    Name      = "${var.project_name}-target-group"
+    Name = "${var.project_name}-target-group"
   }
 }
 
