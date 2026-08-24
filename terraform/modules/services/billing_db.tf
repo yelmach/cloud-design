@@ -22,11 +22,11 @@ resource "aws_ecs_task_definition" "billing_db" {
       cpu       = 256
       memory    = 300
 
-       logConfiguration = {
+      logConfiguration = {
         logDriver = "awslogs"
         options = {
           "awslogs-group"         = aws_cloudwatch_log_group.ecs_logs.name
-          "awslogs-region"        = "eu-west-2"
+          "awslogs-region"        = var.aws_region
           "awslogs-stream-prefix" = "billing-db"
         }
       }
@@ -38,6 +38,14 @@ resource "aws_ecs_task_definition" "billing_db" {
           protocol      = "tcp"
         }
       ]
+
+      healthCheck = {
+        command     = ["CMD-SHELL", "pg_isready -U ${var.billing_db_user} -d ${var.billing_db_name} || exit 1"]
+        interval    = 30
+        timeout     = 5
+        retries     = 3
+        startPeriod = 60
+      }
 
       environment = [
         { name = "POSTGRES_DB", value = var.billing_db_name },
@@ -52,10 +60,11 @@ resource "aws_ecs_task_definition" "billing_db" {
           readOnly      = false
         }
       ]
+
       secrets = [
         {
-          name = "POSTGRES_PASSWORD"
-          valueFrom = var.billing_db_password 
+          name      = "POSTGRES_PASSWORD"
+          valueFrom = var.billing_db_password
         }
       ]
     }
@@ -65,6 +74,7 @@ resource "aws_ecs_task_definition" "billing_db" {
     Name = "${var.project_name}-billing-db-td"
   }
 }
+
 
 resource "aws_ecs_service" "billing_db" {
   name            = "${var.project_name}-billing-db"

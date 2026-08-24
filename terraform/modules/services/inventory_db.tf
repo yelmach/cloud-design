@@ -2,7 +2,7 @@ resource "aws_ecs_task_definition" "inventory_db" {
   family                   = "${var.project_name}-inventory-db"
   network_mode             = "awsvpc"
   requires_compatibilities = ["EC2"]
-  execution_role_arn =  var.ecs_execution_role_arn
+  execution_role_arn       = var.ecs_execution_role_arn
 
   volume {
     name = "inventory-db-data"
@@ -22,11 +22,11 @@ resource "aws_ecs_task_definition" "inventory_db" {
       cpu       = 256
       memory    = 300
 
-       logConfiguration = {
+      logConfiguration = {
         logDriver = "awslogs"
         options = {
           "awslogs-group"         = aws_cloudwatch_log_group.ecs_logs.name
-          "awslogs-region"        = "eu-west-2"
+          "awslogs-region"        = var.aws_region
           "awslogs-stream-prefix" = "inventory-db"
         }
       }
@@ -38,6 +38,14 @@ resource "aws_ecs_task_definition" "inventory_db" {
           protocol      = "tcp"
         }
       ]
+
+      healthCheck = {
+        command     = ["CMD-SHELL", "pg_isready -U ${var.inventory_db_user} -d ${var.inventory_db_name} || exit 1"]
+        interval    = 30
+        timeout     = 5
+        retries     = 3
+        startPeriod = 60
+      }
 
       environment = [
         { name = "POSTGRES_DB", value = var.inventory_db_name },
@@ -52,10 +60,11 @@ resource "aws_ecs_task_definition" "inventory_db" {
           readOnly      = false
         }
       ]
+
       secrets = [
         {
-          name = "POSTGRES_PASSWORD"
-          valueFrom = var.inventory_db_password 
+          name      = "POSTGRES_PASSWORD"
+          valueFrom = var.inventory_db_password
         }
       ]
     }
@@ -65,6 +74,7 @@ resource "aws_ecs_task_definition" "inventory_db" {
     Name = "${var.project_name}-inventory-db-td"
   }
 }
+
 
 resource "aws_ecs_service" "inventory_db" {
   name            = "${var.project_name}-inventory-db"

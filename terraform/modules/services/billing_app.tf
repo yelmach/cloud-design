@@ -17,7 +17,7 @@ resource "aws_ecs_task_definition" "billing_app" {
         logDriver = "awslogs"
         options = {
           "awslogs-group"         = aws_cloudwatch_log_group.ecs_logs.name
-          "awslogs-region"        = "eu-west-2"
+          "awslogs-region"        = var.aws_region
           "awslogs-stream-prefix" = "billing-app"
         }
       }
@@ -29,6 +29,14 @@ resource "aws_ecs_task_definition" "billing_app" {
           protocol      = "tcp"
         }
       ]
+
+      healthCheck = {
+        command     = ["CMD-SHELL", "python3 -c \"import urllib.request; urllib.request.urlopen('http://localhost:8080/health')\" || exit 1"]
+        interval    = 30
+        timeout     = 5
+        retries     = 3
+        startPeriod = 30
+      }
 
       environment = [
         { name = "BILLING_HOST", value = "0.0.0.0" },
@@ -42,6 +50,7 @@ resource "aws_ecs_task_definition" "billing_app" {
         { name = "RABBITMQ_DEFAULT_USER", value = var.rabbitmq_user },
         { name = "RABBITMQ_QUEUE", value = var.rabbitmq_queue }
       ]
+
       secrets = [
         {
           name      = "RABBITMQ_DEFAULT_PASS"
@@ -66,6 +75,7 @@ resource "aws_ecs_service" "billing_app" {
   task_definition = aws_ecs_task_definition.billing_app.arn
   desired_count   = 1
   launch_type     = "EC2"
+
   network_configuration {
     subnets         = var.private_subnet_ids
     security_groups = [aws_security_group.app_sg.id]
