@@ -4,7 +4,7 @@ variable "project_name" {
 }
 variable "aws_region" {
   description = "aws region"
-  type = string
+  type        = string
 }
 variable "vpc_id" {
   description = "The ID of the VPC"
@@ -112,20 +112,30 @@ variable "ecs_execution_role_arn" {
 }
 
 variable "alb_target_group_arn" {
-  type = string
+  type        = string
   description = "alb_target_group_arn"
 }
 
 variable "alb_listener_arn" {
-  type = string
-  description = "alb_target_group_arn"
+  type        = string
+  description = "ARN of the ALB HTTP listener"
 }
 
 variable "alb_target_group_arn_suffix" {
-  type = string
+  type        = string
   description = "alb_target_group_arn_suffix"
 }
 variable "alb_arn_suffix" {
-   type = string
+  type        = string
   description = "alb_arn_suffix"
+}
+
+variable "alb_security_group_id" {
+  description = "ID of the ALB security group"
+  type        = string
+}
+
+variable "ecs_cluster_name" {
+  description = "Name of the ECS cluster"
+  type        = string
 }

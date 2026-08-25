@@ -43,4 +43,27 @@ output "api_gateway_endpoint" {
   value       = module.services.api_gateway_endpoint
 }
 
+output "billing_app_endpoint" {
+  description = "Internal service discovery endpoint for Billing Application service"
+  value       = module.services.billing_app_endpoint
+}
 
+output "alb_dns_name" {
+  description = "DNS address of the Application Load Balancer"
+  value       = module.security_identity.alb_dns_name
+}
+
+output "api_gateway_url" {
+  description = "Public invocation URL for the API Gateway"
+  value       = module.services.api_gateway_url
+}
+
+output "user_pool_id" {
+  description = "Cognito User Pool ID"
+  value       = module.security_identity.user_pool_id
+}
+
+output "user_pool_client_id" {
+  description = "Cognito App Client ID"
+  value       = module.security_identity.user_pool_client_id
+}

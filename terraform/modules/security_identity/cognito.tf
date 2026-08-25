@@ -2,24 +2,24 @@ resource "aws_cognito_user_pool" "main_user_pool" {
   name = "${var.project_name}-user-pool"
 
   # Sign-in Method: Users log in using their Email address
-  username_attributes      = ["email"]
+  username_attributes = ["email"]
 
   # Password Policy (Production Security Baseline)
   password_policy {
-    minimum_length    = 8
-    require_lowercase = true
-    require_uppercase = true
-    require_numbers   = true
-    require_symbols   = true
+    minimum_length                   = 8
+    require_lowercase                = true
+    require_uppercase                = true
+    require_numbers                  = true
+    require_symbols                  = true
     temporary_password_validity_days = 7
   }
 
   # Attribute Schema: username is mandatory and immutable once created
   schema {
-    attribute_data_type      = "String"
-    name                     = "email"
-    required                 = true
-    mutable                  = false
+    attribute_data_type = "String"
+    name                = "email"
+    required            = true
+    mutable             = false
 
     string_attribute_constraints {
       min_length = 5
@@ -28,7 +28,7 @@ resource "aws_cognito_user_pool" "main_user_pool" {
   }
 
   tags = {
-    Name        = "${var.project_name}-user-pool"
+    Name = "${var.project_name}-user-pool"
   }
 }
 

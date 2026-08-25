@@ -33,6 +33,12 @@ output "api_gateway_endpoint" {
   value       = "api-gateway-service.${var.dns_namespace_name}"
 }
 
+output "billing_app_endpoint" {
+  description = "Internal discovery hostname for Billing Application service"
+  value       = "billing-app-service.${var.dns_namespace_name}"
+}
+
+
 output "db_security_group_id" {
   description = "The ID of the database security group"
   value       = aws_security_group.db_sg.id

@@ -2,34 +2,6 @@ resource "aws_ecs_cluster" "main" {
   name = "${var.project_name}-cluster"
 }
 
-resource "aws_iam_role" "ecs_instance_role" {
-  name = "${var.project_name}-ecs-instance-role"
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [{
-      Action    = "sts:AssumeRole"
-      Effect    = "Allow"
-      Principal = { Service = "ec2.amazonaws.com" }
-    }]
-  })
-}
-
-resource "aws_iam_role_policy_attachment" "ecs_instance_policy" {
-  role       = aws_iam_role.ecs_instance_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
-}
-
-resource "aws_iam_instance_profile" "ecs_instance_profile" {
-  name = "${var.project_name}-ecs-instance-profile"
-  role = aws_iam_role.ecs_instance_role.name
-}
-
-# Attach SSM Managed Instance Core policy to the EC2 Host Role
-resource "aws_iam_role_policy_attachment" "ecs_ec2_ssm_attach" {
-  role       = aws_iam_role.ecs_instance_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-}
-
 resource "aws_security_group" "ecs_sg" {
   name        = "${var.project_name}-ecs-sg"
   description = "Security Group for ECS Private Compute Host"
@@ -79,9 +51,9 @@ resource "aws_launch_template" "ecs_host" {
 resource "aws_autoscaling_group" "ecs" {
   name_prefix         = "${var.project_name}-ecs-asg-"
   vpc_zone_identifier = var.private_subnet_ids
-  min_size            = 1
-  max_size            = 3
-  desired_capacity    = 2
+  min_size            = 3
+  max_size            = 4
+  desired_capacity    = 3
 
   launch_template {
     id      = aws_launch_template.ecs_host.id
@@ -90,7 +62,7 @@ resource "aws_autoscaling_group" "ecs" {
 
   tag {
     key                 = "AmazonECSManaged"
-    value               = ""
+    value               = true
     propagate_at_launch = true
   }
 }
@@ -105,7 +77,7 @@ resource "aws_ecs_capacity_provider" "ecs" {
       maximum_scaling_step_size = 1
       minimum_scaling_step_size = 1
       status                    = "ENABLED"
-      target_capacity           = 80
+      target_capacity           = 90
     }
   }
 }

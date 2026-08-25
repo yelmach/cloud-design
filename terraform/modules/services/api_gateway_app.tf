@@ -4,22 +4,23 @@ resource "aws_ecs_task_definition" "api_gateway_app" {
   requires_compatibilities = ["EC2"]
   execution_role_arn       = var.ecs_execution_role_arn
 
-
   container_definitions = jsonencode([
     {
       name      = "api-gateway-app"
       image     = "${var.dockerhub_username}/api-gateway-app:latest"
       essential = true
-      cpu       = 256
-      memory    = 300
+      cpu       = 600
+      memory    = 600
+
       logConfiguration = {
         logDriver = "awslogs"
         options = {
           "awslogs-group"         = aws_cloudwatch_log_group.ecs_logs.name
-          "awslogs-region"        = "eu-west-2"
+          "awslogs-region"        = var.aws_region
           "awslogs-stream-prefix" = "api-gateway"
         }
       }
+
       portMappings = [
         {
           containerPort = 3000
@@ -27,6 +28,14 @@ resource "aws_ecs_task_definition" "api_gateway_app" {
           protocol      = "tcp"
         }
       ]
+
+      healthCheck = {
+        command     = ["CMD-SHELL", "python3 -c \"import urllib.request; urllib.request.urlopen('http://localhost:3000/health')\" || exit 1"]
+        interval    = 30
+        timeout     = 5
+        retries     = 3
+        startPeriod = 30
+      }
 
       environment = [
         { name = "GATEWAY_HOST", value = "0.0.0.0" },
@@ -37,6 +46,7 @@ resource "aws_ecs_task_definition" "api_gateway_app" {
         { name = "RABBITMQ_DEFAULT_USER", value = var.rabbitmq_user },
         { name = "RABBITMQ_QUEUE", value = var.rabbitmq_queue }
       ]
+
       secrets = [
         {
           name      = "RABBITMQ_DEFAULT_PASS"
@@ -52,16 +62,18 @@ resource "aws_ecs_task_definition" "api_gateway_app" {
 }
 
 resource "aws_ecs_service" "api_gateway_app" {
-  name            = "${var.project_name}-api-gateway-app"
-  cluster         = var.ecs_cluster_id
-  task_definition = aws_ecs_task_definition.api_gateway_app.arn
-  desired_count   = 1
-  launch_type     = "EC2"
+  name                              = "${var.project_name}-api-gateway-app"
+  cluster                           = var.ecs_cluster_id
+  task_definition                   = aws_ecs_task_definition.api_gateway_app.arn
+  desired_count                     = 1
+  launch_type                       = "EC2"
+  health_check_grace_period_seconds = 60
 
   network_configuration {
     subnets         = var.private_subnet_ids
     security_groups = [aws_security_group.app_sg.id]
   }
+
   load_balancer {
     target_group_arn = var.alb_target_group_arn
     container_name   = "api-gateway-app"
@@ -75,5 +87,4 @@ resource "aws_ecs_service" "api_gateway_app" {
   tags = {
     Name = "${var.project_name}-api-gateway-app-service"
   }
-
 }

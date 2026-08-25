@@ -1,4 +1,4 @@
-# 1. HTTP API Gateway Instance
+# HTTP API Gateway Instance
 resource "aws_apigatewayv2_api" "api_gw" {
   name          = "${var.project_name}-api-gateway"
   protocol_type = "HTTP"
@@ -6,14 +6,14 @@ resource "aws_apigatewayv2_api" "api_gw" {
   tags = { Name = "${var.project_name}-api-gateway" }
 }
 
-# 2. VPC Link (Routes traffic into private subnets / ALB)
+# VPC Link (Routes traffic into private subnets / ALB)
 resource "aws_apigatewayv2_vpc_link" "vpc_link" {
   name               = "${var.project_name}-vpc-link"
-  security_group_ids = [aws_security_group.app_sg.id]
+  security_group_ids = [var.alb_security_group_id]
   subnet_ids         = var.private_subnet_ids
 }
 
-# 3. Cognito JWT Authorizer
+# Cognito JWT Authorizer
 resource "aws_apigatewayv2_authorizer" "cognito_auth" {
   api_id           = aws_apigatewayv2_api.api_gw.id
   authorizer_type  = "JWT"
@@ -26,7 +26,7 @@ resource "aws_apigatewayv2_authorizer" "cognito_auth" {
   }
 }
 
-# 4. HTTP Proxy Integration pointing to ALB Listener
+# HTTP Proxy Integration pointing to ALB Listener
 resource "aws_apigatewayv2_integration" "alb_integration" {
   api_id             = aws_apigatewayv2_api.api_gw.id
   integration_type   = "HTTP_PROXY"
@@ -36,7 +36,7 @@ resource "aws_apigatewayv2_integration" "alb_integration" {
   connection_id      = aws_apigatewayv2_vpc_link.vpc_link.id
 }
 
-# 5. Protected Route requiring JWT
+# Protected Route requiring JWT
 resource "aws_apigatewayv2_route" "protected_route" {
   api_id             = aws_apigatewayv2_api.api_gw.id
   route_key          = "ANY /{proxy+}"
@@ -45,7 +45,7 @@ resource "aws_apigatewayv2_route" "protected_route" {
   authorizer_id      = aws_apigatewayv2_authorizer.cognito_auth.id
 }
 
-# 6. Auto-Deploying Default Stage
+# Auto-Deploying Default Stage
 resource "aws_apigatewayv2_stage" "default" {
   api_id      = aws_apigatewayv2_api.api_gw.id
   name        = "$default"
