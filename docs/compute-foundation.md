@@ -116,11 +116,11 @@ This module creates an ASG in `var.private_subnet_ids`, which come from the netw
 
 | Setting | Value | Meaning |
 |---|---:|---|
-| Minimum size | `1` | At least one ECS host is kept running. |
-| Desired capacity | `1` | One ECS host is launched initially. |
-| Maximum size | `3` | The cluster can grow to three ECS hosts. |
+| Minimum size | `3` | At least three ECS hosts are kept running across Availability Zones. |
+| Desired capacity | `3` | Three ECS hosts are launched initially, providing capacity for all six services (600 CPU / 600 MB RAM each) to be distributed across hosts. |
+| Maximum size | `4` | The cluster can scale out up to four ECS hosts during peak workload. |
 
-Using multiple private subnets lets the ASG distribute instances across Availability Zones when capacity grows. With a desired capacity of one, however, the initial compute capacity is a single host and is not highly available. Increasing the desired and minimum capacity is needed when the application requires host-level resilience.
+Using multiple private subnets lets the ASG distribute instances across Availability Zones when capacity grows. With a desired capacity of three, the initial deployment spreads across both AZs, giving robust task placement headroom and host resilience.
 
 The `AmazonECSManaged` tag is required for ECS to manage the Auto Scaling group through its capacity provider.
 
@@ -132,7 +132,7 @@ An ECS **capacity provider** connects an ECS cluster to a source of compute capa
 
 When ECS services use this provider, ECS can evaluate whether the running EC2 hosts have enough reserved CPU and memory for the desired tasks. Managed scaling can then adjust the ASG within its minimum and maximum sizes.
 
-The capacity provider uses a target capacity of `80`. In simple terms, ECS aims to keep the hosts approximately 80% reserved, leaving some headroom for scheduling and short-term growth. Its minimum and maximum scaling step sizes are both `1`, so it adds or removes one host per scaling action.
+The capacity provider uses a target capacity of `90`. In simple terms, ECS aims to keep host reservation close to 90 % of current demand, which means it adds EC2 capacity before tasks are left unscheduled rather than waiting for the cluster to be fully saturated. Its minimum and maximum scaling step sizes are both `1`, so it adds or removes one host per scaling action.
 
 ### Default capacity provider strategy
 
@@ -148,7 +148,7 @@ default_capacity_provider_strategy {
 
 `base = 1` tells ECS to place at least one task using this provider when a service uses the default strategy. `weight = 100` gives this provider full preference because it is currently the cluster's only configured provider.
 
-Future ECS services can rely on this default strategy or explicitly declare the same provider. The capacity provider cannot scale beyond three hosts until the ASG `max_size` is increased.
+Future ECS services can rely on this default strategy or explicitly declare the same provider. The capacity provider cannot scale beyond four hosts until the ASG `max_size` is increased.
 
 ## Current limitations and next steps
 
