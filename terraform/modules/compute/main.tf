@@ -51,9 +51,9 @@ resource "aws_launch_template" "ecs_host" {
 resource "aws_autoscaling_group" "ecs" {
   name_prefix         = "${var.project_name}-ecs-asg-"
   vpc_zone_identifier = var.private_subnet_ids
-  min_size            = 1
-  max_size            = 3
-  desired_capacity    = 2
+  min_size            = 3
+  max_size            = 4
+  desired_capacity    = 3
 
   launch_template {
     id      = aws_launch_template.ecs_host.id
@@ -77,7 +77,7 @@ resource "aws_ecs_capacity_provider" "ecs" {
       maximum_scaling_step_size = 1
       minimum_scaling_step_size = 1
       status                    = "ENABLED"
-      target_capacity           = 80
+      target_capacity           = 90
     }
   }
 }

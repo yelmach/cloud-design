@@ -9,7 +9,7 @@ resource "aws_apigatewayv2_api" "api_gw" {
 # VPC Link (Routes traffic into private subnets / ALB)
 resource "aws_apigatewayv2_vpc_link" "vpc_link" {
   name               = "${var.project_name}-vpc-link"
-  security_group_ids = [aws_security_group.app_sg.id]
+  security_group_ids = [var.alb_security_group_id]
   subnet_ids         = var.private_subnet_ids
 }
 

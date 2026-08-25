@@ -10,8 +10,8 @@ resource "aws_ecs_task_definition" "billing_app" {
       name      = "billing-app"
       image     = "${var.dockerhub_username}/billing-app:latest"
       essential = true
-      cpu       = 256
-      memory    = 300
+      cpu       = 600
+      memory    = 600
 
       logConfiguration = {
         logDriver = "awslogs"
@@ -70,11 +70,12 @@ resource "aws_ecs_task_definition" "billing_app" {
 }
 
 resource "aws_ecs_service" "billing_app" {
-  name            = "${var.project_name}-billing-app"
-  cluster         = var.ecs_cluster_id
-  task_definition = aws_ecs_task_definition.billing_app.arn
-  desired_count   = 1
-  launch_type     = "EC2"
+  name                              = "${var.project_name}-billing-app"
+  cluster                           = var.ecs_cluster_id
+  task_definition                   = aws_ecs_task_definition.billing_app.arn
+  desired_count                     = 1
+  launch_type                       = "EC2"
+  health_check_grace_period_seconds = 40
 
   network_configuration {
     subnets         = var.private_subnet_ids

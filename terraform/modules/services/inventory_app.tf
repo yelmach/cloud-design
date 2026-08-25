@@ -9,8 +9,8 @@ resource "aws_ecs_task_definition" "inventory_app" {
       name      = "inventory-app"
       image     = "${var.dockerhub_username}/inventory-app:latest"
       essential = true
-      cpu       = 256
-      memory    = 300
+      cpu       = 600
+      memory    = 600
 
       logConfiguration = {
         logDriver = "awslogs"
@@ -61,11 +61,12 @@ resource "aws_ecs_task_definition" "inventory_app" {
 }
 
 resource "aws_ecs_service" "inventory_app" {
-  name            = "${var.project_name}-inventory-app"
-  cluster         = var.ecs_cluster_id
-  task_definition = aws_ecs_task_definition.inventory_app.arn
-  desired_count   = 1
-  launch_type     = "EC2"
+  name                              = "${var.project_name}-inventory-app"
+  cluster                           = var.ecs_cluster_id
+  task_definition                   = aws_ecs_task_definition.inventory_app.arn
+  desired_count                     = 1
+  launch_type                       = "EC2"
+  health_check_grace_period_seconds = 40
 
   network_configuration {
     subnets         = var.private_subnet_ids

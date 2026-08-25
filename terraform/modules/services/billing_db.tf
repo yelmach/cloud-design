@@ -19,8 +19,8 @@ resource "aws_ecs_task_definition" "billing_db" {
       name      = "billing-db"
       image     = "postgres:16-alpine"
       essential = true
-      cpu       = 256
-      memory    = 300
+      cpu       = 600
+      memory    = 600
 
       logConfiguration = {
         logDriver = "awslogs"

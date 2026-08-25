@@ -118,7 +118,7 @@ variable "alb_target_group_arn" {
 
 variable "alb_listener_arn" {
   type        = string
-  description = "alb_target_group_arn"
+  description = "ARN of the ALB HTTP listener"
 }
 
 variable "alb_target_group_arn_suffix" {

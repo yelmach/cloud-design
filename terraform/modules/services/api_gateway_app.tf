@@ -9,8 +9,8 @@ resource "aws_ecs_task_definition" "api_gateway_app" {
       name      = "api-gateway-app"
       image     = "${var.dockerhub_username}/api-gateway-app:latest"
       essential = true
-      cpu       = 256
-      memory    = 300
+      cpu       = 600
+      memory    = 600
 
       logConfiguration = {
         logDriver = "awslogs"

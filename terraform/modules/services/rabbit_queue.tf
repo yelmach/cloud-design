@@ -9,8 +9,8 @@ resource "aws_ecs_task_definition" "rabbit_queue" {
       name      = "rabbit-queue"
       image     = "rabbitmq:4-management-alpine"
       essential = true
-      cpu       = 256
-      memory    = 300
+      cpu       = 600
+      memory    = 600
 
       logConfiguration = {
         logDriver = "awslogs"
